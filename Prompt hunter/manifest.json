@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Midjourney to Notion",
+  "name": "Prompt hunter",
   "version": "1.0",
-  "description": "Save Midjourney content to a Notion page",
+  "description": "Save the prompt images and other information from the Midjourney details page to your own Notion database",
   "permissions": [
     "tabs",
     "activeTab",
