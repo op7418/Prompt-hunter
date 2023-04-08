@@ -1,4 +1,4 @@
-# Prompt hunter Midjourney 提升词收集助手
+# Prompt hunter-Midjourney 提升词收集助手
 ![iRIKaE.png](https://i.328888.xyz/2023/04/08/iRIKaE.png)
 主要功能是将Midjourney详情页的提示词图片以及其他信息保存到你自己的Notion数据库中方便检索、查找和分析。
 ## 如何使用
