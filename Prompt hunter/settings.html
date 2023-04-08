@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css" />
+  <title>Settings</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    label {
+      display: block;
+      margin-top: 24px;
+    }
+    input {
+      width: 100%;
+      margin-top: 8px;
+    }
+    button {
+      margin-top: 24px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+  <h1>Settings</h1>
+  <form id="settingsForm">
+    <label for="notionApiKey">Notion API Key:</label>
+    <input class="formIput" type="text" id="notionApiKey" name="notionApiKey">
+    
+    <label for="notionDatabaseId">Notion Database ID:</label>
+    <input class="formIput" type="text" id="notionDatabaseId" name="notionDatabaseId">
+    <div><a href="https://your-guide-url.com" target="_blank">Notion及页面ID获取方式</a></div>
+    <button class="formButton" type="submit">Save</button>
+  </form>
+  
+  </div>
+  <script src="settings.js"></script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+body {
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+    min-height: 100vh;
+    font-size: 16px;
+  }
+  
+  .container {
+    width: 640px;
+  }
+
+  .formIput{
+    border-radius: 12px;
+  }
+
+  .formButton{
+    border-radius: 12px;
+    width: 96px;
+  }
+  
+  input[type="text"],
+  textarea,
+  button {
+    height: 40px;
+    font-size: 16px;
+  }
+  

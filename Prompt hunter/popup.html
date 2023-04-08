@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Midjourney to Notion - Popup</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      width: 360px;
+      margin: auto;
+    }
+    button {
+      padding: 10px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>提示词猎手</h1>
+  <p>点击 "保存到Notion "按钮来保存Midjourney详情页的内容到你的Notion页面。</p>
+  <button id="saveButton">保存到 Notion</button>
+  <p>首次使用需要去下面设置页面填写NotionAPI和Notion页面地址</p>
+  <a href="settings.html" target="_blank">设置页面</a>
+  <p id="status"></p>
+  <script src="popup.js"></script>
+</body>
+</html>
