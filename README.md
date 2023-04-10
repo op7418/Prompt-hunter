@@ -11,3 +11,4 @@
 7. 选择加载解压缩扩展来加载Prompt hunter文件夹的扩展
 8. 加载扩展后首次使用需要点击扩展，打开设置页面将你获取到的Notion API KEY和页面ID输入进去保存。
 9. 需要保存时就点击扩展中的保存到Notion按钮就可以了
+**注意**：这个插件只能在Midjourney官网的项目详情页用，也就是这个地址https://www.midjourney.com/app/jobs/*
