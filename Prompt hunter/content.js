@@ -69,9 +69,12 @@ function handleSaveToNotion() {
 }
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  if (request.action === "saveToNotion") {
+  if (request.action === "saveToNotionFromContextMenu") {
     handleSaveToNotion();
-    sendResponse({ message: "Data saved successfully" });
+    sendResponse({ message: "Data saved successfully from context menu" });
+  } else if (request.action === "saveToNotion") {
+    handleSaveToNotion();
+    sendResponse({ message: "Data saved successfully from popup" });
   }
   return true; // 添加这一行以确保响应可以在异步操作完成后发送
 });

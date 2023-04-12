@@ -8,7 +8,8 @@
     "activeTab",
     "storage",
     "webNavigation",
-    "scripting"
+    "scripting",
+    "contextMenus"
   ],
   "host_permissions": ["http://*/*", "https://*/*"],
   "action": {
@@ -20,17 +21,9 @@
   "background": {
     "service_worker": "background.js"
   },
-  
   "options_page": "settings.html",
   "icons": {
     "48": "icon48.png",
     "128": "icon128.png"
-  },
-  "web_accessible_resources": [
-    {
-      "resources": ["/background.js"],
-      "matches": ["https://api.notion.com/*"],
-      "use_dynamic_url": true
-    }
-  ]
+  }
 }

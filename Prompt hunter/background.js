@@ -1,8 +1,20 @@
 const extensionId = "pnckdkkbgfkkegblpkjgfemldcemiode";
 
 chrome.runtime.onInstalled.addListener(() => {
-  chrome.storage.sync.set({ notionApiKey: "", notionDatabaseId: "" });
+  // 创建右键菜单
+  chrome.contextMenus.create({
+    id: "saveToNotion",
+    title: "Save to Notion",
+    contexts: ["page"],
+  });
 });
+
+chrome.contextMenus.onClicked.addListener((info, tab) => {
+  if (info.menuItemId === "saveToNotion") {
+    chrome.tabs.sendMessage(tab.id, { action: "saveToNotionFromContextMenu" });
+  }
+});
+
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === "saveToNotion") {
@@ -86,71 +98,64 @@ async function saveToNotion(imageUrl, prompt, property) {
       const newPageResponse = await response.json();
       const newPageId = newPageResponse.id; // 获取新页面的 ID
 
-const imageBlock = {
-  object: "block",
-  type: "image",
-  image: {
-    type: "external",
-    external: {
-      url: imageUrl,
-    },
-  },
-};
+      const imageBlock = {
+        object: "block",
+        type: "image",
+        image: {
+          type: "external",
+          external: {
+            url: imageUrl,
+          },
+        },
+      };
 
-try {
-  const addChildResponse = await fetch(
-    `https://api.notion.com/v1/blocks/${newPageId}/children`,
-    {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        "Notion-Version": "2022-06-28",
-        "Authorization": `Bearer ${apiKey}`,
-        "Access-Control-Allow-Origin": `chrome-extension://${extensionId}`,
-      },
-      body: JSON.stringify({
-        children: [imageBlock],
-      }),
-    }
-  );
-
-  if (!addChildResponse.ok) {
-    const error = await addChildResponse.json();
-    console.error("Error appending child block to Notion page:", error);
-    throw new Error(
-      `Error appending child block to Notion page. ${JSON.stringify(error)}`
-    );
-  } else {
-    console.log("Appended child block to Notion page successfully!");
-  }
-} catch (error) {
-  console.error("Error appending child block to Notion page:", error);
-}
-
-      // 在这里添加创建子块的代码
-    }
-  } catch (error) {
-    console.error("Error saving to Notion:", error);
-  }
-}
-
-chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
-  if (
-    changeInfo.url &&
-    (changeInfo.url.includes("https://www.midjourney.com/app/jobs/") ||
-      changeInfo.url.includes("https://www.midjourney.com/app/feed/"))
-  ) {
-    try {
-      await chrome.scripting.executeScript({
+      try {
+        const addChildResponse = await fetch(
+          `https://api.notion.com/v1/blocks/${newPageId}/children`,
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+              "Notion-Version": "2022-06-28",
+              "Authorization": `Bearer ${apiKey}`,
+            },
+            body: JSON.stringify({
+              children: [imageBlock],
+            }),
+          }
+        );
+            if (!addChildResponse.ok) {
+              const error = await addChildResponse.json();
+              console.error("Error appending child block to Notion page:", error);
+              throw new Error(
+                `Error appending child block to Notion page. ${JSON.stringify(error)}`
+              );
+            } else {
+              console.log("Appended child block to Notion page successfully!");
+            }
+          } catch (error) {
+            console.error("Error appending child block to Notion page:", error);
+          }
+        }
+      } catch (error) {
+        console.error("Error saving to Notion:", error);
+        }
+        }
+        
+        chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
+        if (
+        changeInfo.url &&
+        (changeInfo.url.includes("https://www.midjourney.com/app/jobs/") ||
+        changeInfo.url.includes("https://www.midjourney.com/app/feed/"))
+        ) {
+        try {
+        await chrome.scripting.executeScript({
         target: { tabId: tabId },
         files: ["content.js"],
-      });
-      console.log("Content script injected.");
-    } catch (error) {
-      console.error("Error injecting content script:", error);
-    }
-  }
-});
-
-
-
+        });
+        console.log("Content script injected.");
+        } catch (error) {
+        console.error("Error injecting content script:", error);
+        }
+        }
+        });
