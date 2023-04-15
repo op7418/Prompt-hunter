@@ -236,4 +236,3 @@ async function saveToNotion(imageUrl, prompt, property, url, additionalText) {
             }
           }
         });
-        
