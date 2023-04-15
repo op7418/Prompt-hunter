@@ -5,7 +5,7 @@
 **注意**：目前存在的已知问题是，只能在内容详情打开为浮层状态时可用，单独的页面不行。Niji由于地址问题只能用于英文界面。免费试用账号由于无法打开项目详情所以无法试用此插件。
 
 ## 如何使用
-1. 复制我这个Notion页面模版，可以增加字段单需要保留我原先的这三个字段，模版地址：https://sugared-impala-dc6.notion.site/a4cb4f48db4a466783259720f6bce83f?v=72b3be124de44f8b9110b88eb69138f7
+1. 复制我这个Notion页面模版，可以增加字段单需要保留我原先的这五个字段，模版地址：https://sugared-impala-dc6.notion.site/a4cb4f48db4a466783259720f6bce83f?v=72b3be124de44f8b9110b88eb69138f7
 [![iEWiQN.png](https://i.328888.xyz/2023/04/16/iEWiQN.png)](https://imgloc.com/i/iEWiQN)
 2. 注册一个Notion API，进入地址之后按引导注释就行，填写完名字和选择生效空间就可以了。注册号之后复制备用。注册地址：https://www.notion.so/my-integrations
 ![iEtujA.png](https://i.328888.xyz/2023/04/16/iEtujA.png)
