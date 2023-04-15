@@ -19,8 +19,8 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === "saveToNotion") {
     if (request.data) {
-      const { imageUrl, prompt, property } = request.data;
-      saveToNotion(imageUrl, prompt, property);
+      const { imageUrl, prompt, property, url, additionalText } = request.data;
+      saveToNotion(imageUrl, prompt, property, url, additionalText);
       sendResponse({ message: "Data saved successfully" });
     } else {
       console.error("Error: request.data is undefined.");
@@ -30,7 +30,8 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   return true; // 添加这一行以确保响应可以在异步操作完成后发送
 });
 
-async function saveToNotion(imageUrl, prompt, property) {
+
+async function saveToNotion(imageUrl, prompt, property, url, additionalText) {
   let apiKey, databaseId;
 
   // 获取 Notion API 密钥和数据库 ID
@@ -51,6 +52,56 @@ async function saveToNotion(imageUrl, prompt, property) {
 
   // 创建 Notion 页面并保存信息
   try {
+
+    const requestBody = {
+      parent: {
+        database_id: databaseId,
+      },
+      properties: {
+        WebLink: {
+          title: [
+            {
+              text: {
+                content: url,
+              },
+            },
+          ],
+        },
+        Prompt: {
+          rich_text: [
+            {
+              text: {
+                content: prompt,
+              },
+            },
+          ],
+        },
+        Property: {
+          rich_text: [
+            {
+              text: {
+                content: property,
+              },
+            },
+          ],
+        },
+        UserName: {
+          rich_text: [
+            {
+              text: {
+                content: additionalText,
+              },
+            },
+          ],
+        },
+        Image: {
+          url: imageUrl,
+        },
+      },
+    };
+  
+    console.log("Sending request body to Notion:", JSON.stringify(requestBody, null, 2));
+
     const response = await fetch("https://api.notion.com/v1/pages", {
       method: "POST",
       headers: {
@@ -64,8 +115,17 @@ async function saveToNotion(imageUrl, prompt, property) {
           database_id: databaseId,
         },
         properties: {
-          Prompt: {
+          WebLink: {
             title: [
+              {
+                text: {
+                  content: url,
+                },
+              },
+            ],
+          },
+          Prompt: {
+            rich_text: [
               {
                 text: {
                   content: prompt,
@@ -78,6 +138,15 @@ async function saveToNotion(imageUrl, prompt, property) {
               {
                 text: {
                   content: property,
+                },
+              },
+            ],
+          },
+          UserName: {
+            rich_text: [
+              {
+                text: {
+                  content: additionalText,
                 },
               },
             ],
@@ -124,24 +193,24 @@ async function saveToNotion(imageUrl, prompt, property) {
             }),
           }
         );
-            if (!addChildResponse.ok) {
-              const error = await addChildResponse.json();
-              console.error("Error appending child block to Notion page:", error);
-              throw new Error(
-                `Error appending child block to Notion page. ${JSON.stringify(error)}`
-              );
-            } else {
-              console.log("Appended child block to Notion page successfully!");
-            }
-          } catch (error) {
-            console.error("Error appending child block to Notion page:", error);
+        if (!addChildResponse.ok) {
+          const error = await addChildResponse.json();
+          console.error("Error appending child block to Notion page:", error);
+          throw new Error(
+            `Error appending child block to Notion page. ${JSON.stringify(error)}`
+          );
+        } else {
+          console.log("Appended child block to Notion page successfully!");
+        }
+      } catch (error) {
+        console.error("Error appending child block to Notion page:", error);
           }
         }
       } catch (error) {
         console.error("Error saving to Notion:", error);
         }
         }
-        
+
         chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
         if (
         changeInfo.url &&

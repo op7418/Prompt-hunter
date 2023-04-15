@@ -40,17 +40,26 @@ function getDataFromPage() {
   const prompt = jobPage.querySelector(".first-letter\\:capitalize").innerText;
   const property = jobPage.querySelector(".line-clamp-1:not(.break-all)").innerText;
 
-  return { imageUrl, prompt, property };
+  // 获取当前网页的网址
+  const url = window.location.href;
+
+  // 获取新的文本字段
+  const additionalTextContainer = jobPage.querySelector(".flex.w-full.flex-wrap-reverse.justify-between");
+  const additionalText = additionalTextContainer.querySelector("p").innerText;
+
+  return { imageUrl, prompt, property, url, additionalText };
 }
 
 function handleSaveToNotion() {
   console.log("Handling save to Notion in the content script");
-  const { imageUrl, prompt, property } = getDataFromPage();
+  const { imageUrl, prompt, property, url, additionalText } = getDataFromPage();
 
   console.log("Sending data:", {
     imageUrl: imageUrl,
     prompt: prompt,
     property: property,
+    url: url,
+    additionalText: additionalText,
   });
 
   chrome.runtime.sendMessage(
@@ -60,6 +69,8 @@ function handleSaveToNotion() {
         imageUrl: imageUrl,
         prompt: prompt,
         property: property,
+        url: url,
+        additionalText: additionalText,
       },
     },
     (response) => {
@@ -67,6 +78,7 @@ function handleSaveToNotion() {
     }
   );
 }
+
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === "saveToNotionFromContextMenu") {
