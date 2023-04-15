@@ -212,19 +212,28 @@ async function saveToNotion(imageUrl, prompt, property, url, additionalText) {
         }
 
         chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
-        if (
-        changeInfo.url &&
-        (changeInfo.url.includes("https://www.midjourney.com/app/jobs/") ||
-        changeInfo.url.includes("https://www.midjourney.com/app/feed/"))
-        ) {
-        try {
-        await chrome.scripting.executeScript({
-        target: { tabId: tabId },
-        files: ["content.js"],
+          if (changeInfo.url) {
+            if (changeInfo.url.includes("https://www.midjourney.com/app/jobs/") || changeInfo.url.includes("https://www.midjourney.com/app/feed/")) {
+              try {
+                await chrome.scripting.executeScript({
+                  target: { tabId: tabId },
+                  files: ["content.js"],
+                });
+                console.log("Content script injected.");
+              } catch (error) {
+                console.error("Error injecting content script:", error);
+              }
+            } else if (changeInfo.url.includes("https://nijijourney.com/en/app/jobs/") || changeInfo.url.includes("https://nijijourney.com/en/app/feed/")) {
+              try {
+                await chrome.scripting.executeScript({
+                  target: { tabId: tabId },
+                  files: ["content-niji.js"],
+                });
+                console.log("Content-niji script injected.");
+              } catch (error) {
+                console.error("Error injecting content-niji script:", error);
+              }
+            }
+          }
         });
-        console.log("Content script injected.");
-        } catch (error) {
-        console.error("Error injecting content script:", error);
-        }
-        }
-        });
+        
