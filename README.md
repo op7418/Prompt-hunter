@@ -1,7 +1,9 @@
 # Prompt hunter 提示词收集助手
 ![iRIKaE.png](https://i.328888.xyz/2023/04/08/iRIKaE.png)
 主要功能是将Midjourney详情页的提示词图片以及其他信息保存到你自己的Notion数据库中方便检索、查找和分析。
+
 **注意**：目前存在的已知问题是，只能在内容详情打开为浮层状态时可用，单独的页面不行。Niji由于地址问题只能用于英文界面。免费试用账号由于无法打开项目详情所以无法试用此插件。
+
 ## 如何使用
 1. 复制我这个Notion页面模版，可以增加字段单需要保留我原先的这三个字段，模版地址：https://sugared-impala-dc6.notion.site/a4cb4f48db4a466783259720f6bce83f?v=72b3be124de44f8b9110b88eb69138f7
 [![iEWiQN.png](https://i.328888.xyz/2023/04/16/iEWiQN.png)](https://imgloc.com/i/iEWiQN)
